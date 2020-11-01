@@ -1,6 +1,7 @@
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 
 public class LCSFinder {
     private static final int UP = -1;
@@ -8,6 +9,34 @@ public class LCSFinder {
     private static final int DIAG = 1;
     static private int[][] c;
     static private int[][] b;
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        do {
+            System.out.print("Input Target Sequence: ");
+            String command = scanner.nextLine();
+            if(command.equals("exit")) break;
+
+            try {
+                System.out.println(getHairpin(command));
+            } catch (NoBiologicalSequenceException e) {
+                System.out.println(e.getMessage());
+            }
+        } while(true);
+
+        scanner.close();
+
+    }
+
+    public static String getHairpin(String x) throws NoBiologicalSequenceException{
+        if(!isBioSequence(x)) throw new NoBiologicalSequenceException();
+        else {
+            String compliment = convertToReverseCompliment(x);
+            return (new StringBuffer(getLCS(x,compliment))).reverse().toString();
+        }
+    }
 
     public static String getLPS(String x) {
         String reverse = (new StringBuffer(x)).reverse().toString();
@@ -18,6 +47,35 @@ public class LCSFinder {
         if(x.length()==0 || y.length()==0) return "";
         fillArrays(x,y);
         return getSequence(x,x.length(),y.length());
+    }
+
+    private static String convertToReverseCompliment(String x) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for(int i=0 ; i<x.length(); i++) {
+            switch (x.charAt(i)) {
+                case 'A':
+                    stringBuilder.append('T');
+                    break;
+                case 'T':
+                    stringBuilder.append('A');
+                    break;
+                case 'C':
+                    stringBuilder.append('G');
+                    break;
+                case 'G':
+                    stringBuilder.append('C');
+                    break;
+            }
+        }
+        return (new StringBuffer(stringBuilder.toString())).reverse().toString();
+    }
+
+    private static boolean isBioSequence(String x) {
+        for(int i=0; i<x.length(); i++) {
+            char ch = x.charAt(i);
+            if(!(ch=='A' || ch=='G' || ch=='T' || ch=='C')) return false;
+        }
+        return true;
     }
 
     private static void fillArrays(String x, String y) {
@@ -71,5 +129,12 @@ public class LCSFinder {
         }
 
         return result.toString();
+    }
+}
+
+class NoBiologicalSequenceException extends Exception {
+    @Override
+    public String getMessage() {
+        return "This is not a biological Sequence";
     }
 }
