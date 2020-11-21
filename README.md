@@ -1,3 +1,5 @@
+# Report of HW3 in Algorithm Course 
+## 2019-11181 Kim Jeong Won
 ## Class for finding Longest Common Subsequence
 
 ### Description

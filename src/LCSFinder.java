@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,8 +12,7 @@ public class LCSFinder {
     static private int[][] c;
     static private int[][] b;
 
-    public static void main(String[] args) {
-
+    public static void myTest() {
         Scanner scanner = new Scanner(System.in);
 
         do {
@@ -27,14 +28,33 @@ public class LCSFinder {
         } while(true);
 
         scanner.close();
+    }
 
+    public static void main(String[] args) {
+//        myTest();
+        File seq1File = new File("/seq1.txt");
+        File seq2File = new File("/seq2.txt");
+        try {
+            Scanner scanner = new Scanner(seq1File);
+            Scanner scanner2 = new Scanner(seq2File);
+            String seq1 = scanner.nextLine();
+            String seq2 = scanner2.nextLine();
+            try {
+                System.out.println(getHairpin(seq1));
+                System.out.println(getHairpin(seq2));
+            } catch (NoBiologicalSequenceException e) {
+                System.out.println(e.getMessage());
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("file is not exist or wrong file path");
+        }
     }
 
     public static String getHairpin(String x) throws NoBiologicalSequenceException{
         if(!isBioSequence(x)) throw new NoBiologicalSequenceException();
         else {
             String compliment = convertToReverseCompliment(x);
-            return (new StringBuffer(getLCS(x,compliment))).reverse().toString();
+            return getLCS(x,compliment);
         }
     }
 
