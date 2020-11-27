@@ -10,9 +10,8 @@ This is not a biological Sequence ```
 - if enter 'exit', then the program will be terminated
 
 ### Functions
-- <code>LCSFinder.getLCS(String x, String y)</code> : find the Longest Common Subsequence of x and y 
-- <code>LCSFinder.getLPS(String x)</code> : find the Longest Palindrome Subsequence of x
-- <code>LCSFinder.getHairpin(String x)</code> : find the Longest Reverse Compliment Subsequence of x
+- <code>LCSFinder.getLCS(char[] x, char[] y)</code> : find the Longest Common Subsequence of x and y 
+- <code>LCSFinder.getHairpin(char[] x)</code> : find the Longest Reverse Compliment Subsequence of x
 
 ### Algorithm of getHairpin
 1. converting each character of a given string by 4 cases ( 'A' to 'T', 'T' to 'A', 'G' to 'C', 'C' to 'G' )
